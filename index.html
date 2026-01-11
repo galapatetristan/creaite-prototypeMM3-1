@@ -2,82 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CreAIte — Create with AI</title>
-
-  <meta name="description" content="CreAIte is an AI-powered content creation platform for captions, designs, websites, and videos." />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="./styles.css?v=999">
+  <meta name="description" content="CreAIte is an AI-powered content creation studio for students and SMEs—designs, captions, and videos in minutes." />
+  <link rel="stylesheet" href="./styles.css?v=1" />
 </head>
 
 <body>
-  <!-- ================= HEADER ================= -->
-  <header class="site-header">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="brand" href="#top">
-        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo">
+      <a class="brand" href="./index.html#top" aria-label="CreAIte home">
+        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo" />
         <span class="brand-name">CreAIte</span>
         <span class="brand-tag">Create with AI</span>
       </a>
 
-      <nav class="nav">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span class="menu-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#how">How it works</a>
-        <a href="#features">Features</a>
+        <a href="#value">Value</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact" class="btn btn-small">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- ================= HERO ================= -->
-  <main id="top">
-    <section class="hero hero-chatgpt">
-      <div class="container hero-center">
+  <main id="main">
 
+    <!-- HERO (ChatGPT-style) -->
+    <section class="hero hero-chatgpt" id="hero">
+      <div class="container hero-center">
         <p class="eyebrow">CreAIte — Create with AI</p>
         <h1 class="hero-title">What do you want to create today?</h1>
         <p class="lead">
-          Generate captions, designs, websites, and videos in minutes —
-          powered by AI, guided by you.
+          Generate marketing designs, captions, website/UI concepts, and video edits in minutes — then refine with your brand kit.
         </p>
 
-        <!-- TOOL PILLS -->
         <div class="prompt-shell">
           <div class="prompt-row">
-            <button class="tool-pill is-active">Prompt</button>
-            <button class="tool-pill">Brand Kit</button>
-            <button class="tool-pill">Templates</button>
+            <button class="tool-pill is-active" data-tool="prompt" type="button">Prompt</button>
+            <button class="tool-pill" data-tool="brand" type="button">Brand kit</button>
+            <button class="tool-pill" data-tool="templates" type="button">Templates</button>
+            <button class="tool-pill" data-tool="web" type="button">Website</button>
+            <button class="tool-pill" data-tool="video" type="button">Video edit</button>
           </div>
 
-          <!-- PROMPT FORM -->
-          <form class="prompt-box" id="promptForm">
-            <input
-              id="promptInput"
-              type="text"
-              placeholder="e.g. Write a caption about Filipino adobo for my cooking show"
-              autocomplete="off"
-            />
-            <button class="btn" id="generateBtn" type="submit">Generate</button>
-          </form>
-
-          <!-- SUGGESTIONS -->
-          <div class="suggestions">
-            <button class="chip chip-action" data-suggest="Write a caption about Filipino adobo for a cooking show.">
-              Filipino Adobo
-            </button>
-            <button class="chip chip-action" data-suggest="Create a promo poster caption for a café Valentine’s Day sale.">
-              Valentine Promo
-            </button>
-            <button class="chip chip-action" data-suggest="Design a landing page layout for a small business website.">
-              Website Design
-            </button>
-          </div>
-        </div>
-
-        <!-- RESULT CARD -->
-        <div class="container" style="margin-top:20px;">
+          <!-- RESULT CARD -->
           <div class="result-card" id="landingResultCard" hidden>
             <div class="result-top">
               <span class="badge">Result</span>
@@ -85,155 +62,532 @@
             </div>
 
             <div class="result-body" id="landingResultBody">
-              <!-- Generated content here -->
+              <!-- filled by JS -->
             </div>
 
             <div class="result-bottom">
-              <button class="chip" id="landingMore">Generate variants</button>
-              <button class="chip" id="landingRefine">Refine</button>
-              <button class="chip" id="landingExport">Export PNG</button>
+              <button class="chip" id="landingMore" type="button">Generate variants</button>
+              <button class="chip" id="landingRefine" type="button">Refine</button>
+              <button class="chip" id="landingExport" type="button">Export PNG</button>
             </div>
+          </div>
+
+          <!-- PROMPT FORM -->
+          <form class="prompt-box" id="promptForm">
+            <input
+              id="promptInput"
+              type="text"
+              name="prompt"
+              placeholder="e.g. Make me a caption about Filipino adobo for my cooking show..."
+              autocomplete="off"
+              required
+            />
+            <button class="btn" id="generateBtn" type="submit">Generate</button>
+          </form>
+
+          <!-- VIDEO UPLOAD (DEMO) -->
+          <div class="upload-row" id="videoUploadRow" hidden>
+            <div class="upload-card">
+              <div class="upload-head">
+                <div>
+                  <strong>Upload raw video</strong>
+                  <p class="muted small">Demo only — we’ll simulate trimming, captions, and color.</p>
+                </div>
+                <span class="pill">MP4 / MOV</span>
+              </div>
+              <input class="file" type="file" id="videoFile" accept="video/*" />
+              <div class="upload-actions">
+                <button class="btn btn-ghost" id="videoPresetBtn" type="button">Apply preset</button>
+                <button class="btn" id="videoEditBtn" type="button">Edit video</button>
+              </div>
+              <p class="muted small" id="videoNote" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- SUGGESTIONS -->
+          <div class="suggestions">
+            <button class="chip chip-action" type="button"
+              data-suggest="Create a Valentine’s Day promo poster for a café — 2 for 1 drinks, IG post.">Valentine promo</button>
+
+            <button class="chip chip-action" type="button"
+              data-suggest="Write a caption + hashtag set for a Filipino adobo cooking show episode.">Adobo caption</button>
+
+            <button class="chip chip-action" type="button"
+              data-suggest="Design a landing page for a small business — sections + short copy + CTA.">Website layout</button>
+
+            <button class="chip chip-action" type="button"
+              data-suggest="Edit my raw vlog video: add captions, cut dead air, and make colors more cinematic.">Video edit</button>
           </div>
         </div>
 
+        <!-- SERVICES -->
+        <div class="services-grid">
+          <button class="service-card service-social" data-service="social" type="button">
+            <h3>Social Media Content</h3>
+            <p class="muted">Posts, reels, captions, hashtags.</p>
+            <span class="mini">Tap to auto-fill prompt</span>
+          </button>
+
+          <button class="service-card service-brand" data-service="branding" type="button">
+            <h3>Brand Kit & Consistency</h3>
+            <p class="muted">Logo, colors, fonts, tone.</p>
+            <span class="mini">Tap to auto-fill prompt</span>
+          </button>
+
+          <button class="service-card service-ads" data-service="ads" type="button">
+            <h3>Ads & Promotions</h3>
+            <p class="muted">Posters, flyers, offer layouts.</p>
+            <span class="mini">Tap to auto-fill prompt</span>
+          </button>
+
+          <button class="service-card service-web" data-service="web" type="button">
+            <h3>Website & UI/UX</h3>
+            <p class="muted">Landing pages, sections, UI wireframes.</p>
+            <span class="mini">Tap to auto-fill prompt</span>
+          </button>
+
+          <button class="service-card service-video" data-service="video" type="button">
+            <h3>AI Video Editing</h3>
+            <p class="muted">Upload raw video → captions + trims + polish.</p>
+            <span class="mini">Tap to auto-fill prompt</span>
+          </button>
+        </div>
+
+        <div class="hero-cta">
+          <button class="btn" id="openSignIn" type="button">Sign in to save projects</button>
+          <a class="btn btn-ghost" href="#how">View workflow</a>
+          <a class="btn btn-ghost" href="./features.html">See features</a>
+        </div>
+
+        <p class="muted tiny center" id="authState"></p>
       </div>
     </section>
 
-    <!-- ================= FEATURES ================= -->
-    <section class="section" id="features">
+    <!-- ABOUT -->
+    <section class="section" id="about">
       <div class="container">
         <div class="section-head">
-          <h2>What CreAIte can do</h2>
-          <p>All-in-one AI platform for modern creators.</p>
+          <h2>About CreAIte</h2>
+          <p>
+            CreAIte helps students, freelancers, and SMEs create consistent, professional content quickly —
+            designs, copy, website layouts, and video edits in one guided workflow.
+          </p>
         </div>
 
-        <div class="services-grid">
-          <button class="service-card" data-service="social">
-            <h3>Social Media Content</h3>
-            <p class="muted">Captions, hashtags, posts, reels.</p>
-          </button>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Mission</h3>
+            <p>
+              Democratize professional-quality content creation by empowering students and SMEs
+              with an intuitive, cloud-based, AI-powered platform.
+            </p>
+          </div>
 
-          <button class="service-card" data-service="branding">
-            <h3>Brand Kit & Consistency</h3>
-            <p class="muted">Colors, fonts, tone, logo usage.</p>
-          </button>
+          <div class="card">
+            <h3>Vision</h3>
+            <p>
+              Become a leading platform for AI-driven marketing content creation recognized for innovation,
+              user-centric design, and real-world impact.
+            </p>
+          </div>
+        </div>
 
-          <button class="service-card" data-service="ads">
-            <h3>Ads & Promotions</h3>
-            <p class="muted">Posters, flyers, campaign copy.</p>
-          </button>
-
-          <button class="service-card" data-service="web">
-            <h3>Website & UI/UX</h3>
-            <p class="muted">Landing pages, layouts, sections.</p>
-          </button>
-
-          <button class="service-card">
-            <h3>Video Editing (AI)</h3>
-            <p class="muted">Upload raw video + prompt-based edits.</p>
-          </button>
+        <div class="card wide">
+          <h3>Who it’s for</h3>
+          <div class="chips">
+            <span class="chip">Students</span>
+            <span class="chip">SMEs</span>
+            <span class="chip">Freelancers</span>
+            <span class="chip">Creators</span>
+            <span class="chip">Teams</span>
+          </div>
+          <p class="muted">
+            Use CreAIte for academic outputs, business promotions, content planning, brand-consistent campaigns,
+            website drafts, and quick video edits.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ================= HOW IT WORKS ================= -->
+    <!-- HOW -->
     <section class="section alt" id="how">
       <div class="container">
         <div class="section-head">
           <h2>How it works</h2>
+          <p>A structured workflow — from prompt to export — that keeps you in control while AI accelerates the heavy lifting.</p>
         </div>
 
         <ol class="steps">
-          <li>Enter a prompt or choose a template</li>
-          <li>AI generates content and variations</li>
-          <li>Edit, refine, and customize</li>
-          <li>Export or save your project</li>
+          <li class="step">
+            <div class="step-n">1</div>
+            <div class="step-b">
+              <h3>Sign in & choose a goal</h3>
+              <p>Pick a service (social, ads, web/UI, video), or type your own prompt.</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-n">2</div>
+            <div class="step-b">
+              <h3>Brand kit applied</h3>
+              <p>Use your logo, colors, fonts, and tone for consistent outputs across all content types.</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-n">3</div>
+            <div class="step-b">
+              <h3>Generate variations</h3>
+              <p>Get multiple layouts, captions, sections, and concepts — ready to refine.</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-n">4</div>
+            <div class="step-b">
+              <h3>Edit & refine</h3>
+              <p>Tweak text, layout, and direction until it fits your brand and audience.</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-n">5</div>
+            <div class="step-b">
+              <h3>Export & share</h3>
+              <p>Simulated export in this demo. In production: PNG/JPG/PDF/MP4 + links + version history.</p>
+            </div>
+          </li>
         </ol>
       </div>
     </section>
 
-    <!-- ================= PRICING ================= -->
-    <section class="section" id="pricing">
+    <!-- VALUE -->
+    <section class="section" id="value">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why CreAIte</h2>
+          <p>Built around speed, quality, and control — without the overhead of outsourcing.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card"><h3>Ease of use</h3><p>Guided prompts and templates help beginners move fast without getting stuck.</p></div>
+          <div class="card"><h3>Full customization</h3><p>Everything generated stays editable so your output still feels like you.</p></div>
+          <div class="card"><h3>Cost efficiency</h3><p>Reduce reliance on repetitive manual content production.</p></div>
+          <div class="card"><h3>Professional quality</h3><p>Brand-consistent visuals, captions, and export-ready structures.</p></div>
+          <div class="card"><h3>All-in-one</h3><p>Design, copy, web drafts, and video edits in one workflow.</p></div>
+          <div class="card"><h3>Made for students & SMEs</h3><p>Budget-friendly tiers and practical outputs for real use cases.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section alt" id="pricing">
       <div class="container">
         <div class="section-head">
           <h2>Pricing</h2>
+          <p>Choose the plan that matches your needs — Personal, Student, Business, or Enterprise.</p>
         </div>
 
-        <div class="pricing">
+        <div class="tabs" role="tablist" aria-label="Pricing categories">
+          <button class="tab active" role="tab" aria-selected="true" data-tab="personal" type="button">Personal</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="student" type="button">Student</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="business" type="button">Business</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="enterprise" type="button">Enterprise</button>
+        </div>
+
+        <!-- PERSONAL -->
+        <div class="pricing" data-panel="personal">
           <div class="price-card">
-            <h3>Free</h3>
-            <p class="price">₱0 / month</p>
+            <h3>Free Tier</h3>
+            <p class="price">₱0 <span>/ month</span></p>
             <ul>
-              <li>50 prompts / month</li>
-              <li>Basic generation</li>
-              <li>Standard downloads</li>
+              <li>50 prompts/month (First Year)</li>
+              <li>Basic designs & text generation</li>
+              <li>Simple templates</li>
+              <li>Standard-quality downloads</li>
+              <li>Normal processing speed</li>
             </ul>
-            <button class="btn btn-ghost">Get started</button>
+            <button class="btn btn-ghost" type="button">Get started</button>
           </div>
 
           <div class="price-card featured">
+            <div class="badge">Popular</div>
             <h3>Standard</h3>
-            <p class="price">₱249 / month</p>
+            <p class="price">₱249 <span>/ month</span></p>
             <ul>
               <li>Unlimited prompts</li>
-              <li>More templates</li>
-              <li>HD downloads</li>
+              <li>Faster results</li>
+              <li>More templates available</li>
+              <li>Better HD-quality downloads</li>
+              <li>Add your logo & brand colors</li>
+              <li>Priority in AI rendering</li>
             </ul>
-            <button class="btn">Start</button>
+            <button class="btn" type="button">Start</button>
           </div>
 
           <div class="price-card">
-            <h3>Premium</h3>
-            <p class="price">₱399 / month</p>
+            <h3>CreAIte Plus (Premium)</h3>
+            <p class="price">₱399 <span>/ month</span></p>
             <ul>
-              <li>4K downloads</li>
-              <li>Full brand kit</li>
-              <li>Advanced AI tools</li>
+              <li>Everything in Standard</li>
+              <li>4K high-quality downloads</li>
+              <li>Full brand kit (logos, colors, fonts)</li>
+              <li>Premium templates & assets</li>
+              <li>Advanced AI tools (video edit, captions, layouts)</li>
+              <li>Early access to new features</li>
             </ul>
-            <button class="btn btn-ghost">Upgrade</button>
+            <button class="btn btn-ghost" type="button">Upgrade</button>
+          </div>
+        </div>
+
+        <!-- STUDENT -->
+        <div class="pricing hidden" data-panel="student">
+          <div class="price-card">
+            <h3>Student Free</h3>
+            <p class="price">₱0 <span>/ month</span></p>
+            <ul>
+              <li>50 prompts/month (First Year)</li>
+              <li>Basic student templates</li>
+              <li>Simple editing tools</li>
+              <li>Standard-quality output</li>
+            </ul>
+            <button class="btn btn-ghost" type="button">Get started</button>
+          </div>
+
+          <div class="price-card featured">
+            <div class="badge">Best value</div>
+            <h3>Student Standard</h3>
+            <p class="price">₱99 <span>/ month</span></p>
+            <ul>
+              <li>Unlimited prompts</li>
+              <li>Essay & report generator</li>
+              <li>Poster/infographic/slide templates</li>
+              <li>Faster AI results</li>
+              <li>HD-quality downloads</li>
+            </ul>
+            <button class="btn" type="button">Start</button>
+          </div>
+
+          <div class="price-card">
+            <h3>Student Premium</h3>
+            <p class="price">₱199 <span>/ month</span></p>
+            <ul>
+              <li>Everything in Student Standard</li>
+              <li>Premium academic templates</li>
+              <li>Rewriting & grammar tools</li>
+              <li>4K presentation exports</li>
+              <li>Brand kit for school orgs</li>
+            </ul>
+            <button class="btn btn-ghost" type="button">Upgrade</button>
+          </div>
+        </div>
+
+        <!-- BUSINESS -->
+        <div class="pricing hidden" data-panel="business">
+          <div class="price-card">
+            <h3>Business Basic</h3>
+            <p class="price">₱599 <span>/ month</span></p>
+            <ul>
+              <li>Unlimited prompts</li>
+              <li>Up to 5 team members</li>
+              <li>Ready-made templates for businesses</li>
+              <li>HD downloads</li>
+              <li>Faster processing speeds</li>
+              <li>Basic team workspace</li>
+              <li>Can request simple website layouts</li>
+            </ul>
+            <button class="btn btn-ghost" type="button">Talk to sales</button>
+          </div>
+
+          <div class="price-card featured">
+            <div class="badge">Teams</div>
+            <h3>Business Standard</h3>
+            <p class="price">₱1,299 <span>/ month</span></p>
+            <ul>
+              <li>Everything in Business Basic</li>
+              <li>Up to 10 team members</li>
+              <li>Full brand kit tools</li>
+              <li>4K exports</li>
+              <li>Priority customer support</li>
+              <li>Website design creation (up to 3 pages)</li>
+              <li>Custom landing page for promotions</li>
+            </ul>
+            <button class="btn" type="button">Start</button>
+          </div>
+
+          <div class="price-card">
+            <h3>Business + Growth</h3>
+            <p class="muted">For teams scaling content production.</p>
+            <ul>
+              <li>Advanced template packs</li>
+              <li>Team roles & approvals</li>
+              <li>Content calendar & version history</li>
+              <li>Faster queues</li>
+            </ul>
+            <button class="btn btn-ghost" type="button">Learn more</button>
+          </div>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="pricing hidden" data-panel="enterprise">
+          <div class="card wide">
+            <h3>Enterprise (Custom)</h3>
+            <p class="lead">
+              Starting at <strong>₱3,500+ / month</strong> for teams needing API access, automation,
+              custom integrations, and multi-page website creation.
+            </p>
+
+            <div class="grid-2">
+              <div>
+                <h4 class="mini-title">Includes</h4>
+                <ul class="bullets">
+                  <li>Unlimited team members</li>
+                  <li>API access for companies</li>
+                  <li>Workflow automation</li>
+                  <li>Dedicated account manager</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="mini-title">Web & integrations</h4>
+                <ul class="bullets">
+                  <li>Custom integrations (CRM, website tools, etc.)</li>
+                  <li>Full website creation (multi-page)</li>
+                  <li>Advanced web design + branding system</li>
+                  <li>Monthly maintenance & updates</li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="btn" type="button">Request a quote</button>
+          </div>
+        </div>
+
+        <!-- PROMOS -->
+        <div class="promo-wrap">
+          <div class="section-head tight">
+            <h3>Launch-year promotional offers</h3>
+            <p class="muted">
+              Intro pricing is designed to remove barriers and encourage early adoption for students, freelancers, and SMEs.
+            </p>
+          </div>
+
+          <div class="promo-table card">
+            <div class="promo-row promo-head">
+              <span>Promo type</span>
+              <span>Details</span>
+            </div>
+            <div class="promo-row">
+              <span><strong>FREE 1-Month Trial</strong></span>
+              <span>All paid plans include 1-month premium access with cancellation anytime during the trial.</span>
+            </div>
+            <div class="promo-row">
+              <span><strong>Early Adopter Discount</strong></span>
+              <span>20% OFF for the first 3 months after the free trial ends (launch-year subscribers).</span>
+            </div>
+            <div class="promo-row">
+              <span><strong>Student Discount</strong></span>
+              <span>Verified students get an additional 10% OFF on Student Plans for the whole first year.</span>
+            </div>
+            <div class="promo-row">
+              <span><strong>SME Team Discount</strong></span>
+              <span>Teams with 5+ members get 15% OFF on Business or Enterprise plans.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>Send us a message (demo). In production, connect to Google Forms or Formspree.</p>
+        </div>
+
+        <div class="grid-2">
+          <form class="form card" id="contactForm">
+            <label>
+              Name
+              <input name="name" autocomplete="name" placeholder="Juan Dela Cruz" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" placeholder="you@email.com" required />
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="5" placeholder="Tell us what you want to create..." required></textarea>
+            </label>
+            <button class="btn" type="submit">Send message</button>
+            <p class="muted small" id="formNote" aria-live="polite"></p>
+          </form>
+
+          <div class="card">
+            <h3>Quick links</h3>
+            <ul class="bullets">
+              <li><a href="./features.html">Features page</a></li>
+              <li><a href="#pricing">Pricing tiers</a></li>
+              <li><a href="#how">Workflow</a></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <h3>Sign in options (demo)</h3>
+            <p class="muted">Google, Outlook, Apple ID, and Email — simulated for presentation.</p>
+            <button class="btn btn-ghost" id="openSignIn2" type="button">Open sign in</button>
+
+            <div class="divider"></div>
+            <a class="btn btn-ghost" href="#top">Back to top</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= CONTACT ================= -->
-    <section class="section alt" id="contact">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-        </div>
-
-        <form class="form card" id="contactForm">
-          <label>
-            Name
-            <input required placeholder="Juan Dela Cruz">
-          </label>
-
-          <label>
-            Email
-            <input type="email" required placeholder="you@email.com">
-          </label>
-
-          <label>
-            Message
-            <textarea rows="4" required placeholder="Tell us what you want to create…"></textarea>
-          </label>
-
-          <button class="btn">Send message</button>
-          <p class="muted small" id="formNote"></p>
-        </form>
-      </div>
-    </section>
-
-    <!-- ================= FOOTER ================= -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="container footer-inner">
         <p class="muted">© <span id="year"></span> CreAIte</p>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#how">How it works</a>
+          <a href="#pricing">Pricing</a>
+        </div>
       </div>
     </footer>
   </main>
 
-  <!-- Script -->
-  <script src="./script.js?v=999"></script>
+  <!-- AUTH MODAL (DEMO SIGN-IN) -->
+  <div class="backdrop" id="authBackdrop" hidden></div>
+
+  <div class="modal" id="authModal" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="authTitle">Sign in</h3>
+        <button class="icon-btn" id="authClose" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <p class="muted small">
+        Demo sign-in for presentation (no real auth yet).
+      </p>
+
+      <label class="field">
+        <span>Email (optional)</span>
+        <input id="authEmail" type="email" placeholder="demo@creaite.com" />
+      </label>
+
+      <div class="auth-grid">
+        <button class="auth-btn" type="button" data-provider="Google">Continue with Google</button>
+        <button class="auth-btn" type="button" data-provider="Outlook">Continue with Outlook</button>
+        <button class="auth-btn" type="button" data-provider="Apple ID">Continue with Apple ID</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="authContinue" type="button">Continue with Email</button>
+        <button class="btn" id="authLogout" type="button">Sign out</button>
+      </div>
+
+      <p class="muted tiny" id="authStateInline"></p>
+    </div>
+  </div>
+
+  <script src="./script.js?v=1"></script>
 </body>
 </html>
