@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CreAIte — Create with AI</title>
-  <meta name="description" content="CreAIte is an AI-powered content creation studio for students and SMEs—designs, captions, and videos in minutes." />
-  <link rel="stylesheet" href="./styles.css">
+  <meta name="description" content="CreAIte helps students and SMEs create marketing content with AI—designs, captions, UI/UX layouts, and video edits." />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
@@ -13,30 +13,34 @@
 
   <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="brand" href="#top">
-        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo">
+      <a class="brand" href="#top" aria-label="CreAIte home">
+        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo" />
         <span class="brand-name">CreAIte</span>
         <span class="brand-tag">Create with AI</span>
       </a>
+
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span class="menu-bars" aria-hidden="true"></span>
+      </button>
 
       <nav class="nav" id="nav" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#how">How it works</a>
         <a href="#value">Value</a>
         <a href="#pricing">Pricing</a>
-        <a href="./features.html">Features</a>
         <a href="#contact" class="btn btn-small">Contact</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
+    <!-- ChatGPT-ish hero -->
     <section class="hero hero-chatgpt" id="hero">
       <div class="container hero-center">
         <p class="eyebrow">CreAIte — Create with AI</p>
         <h1 class="hero-title">What do you want to create today?</h1>
         <p class="lead">
-          Generate marketing designs, captions, and short video concepts in minutes — then refine with your brand kit.
+          Generate marketing designs, captions, UI/UX website layouts, and short video edits — then refine with your brand kit.
         </p>
 
         <div class="prompt-shell">
@@ -46,113 +50,24 @@
             <button class="tool-pill" data-tool="templates" type="button">Templates</button>
           </div>
 
+          <form class="prompt-box" id="promptForm">
+            <input id="promptInput" type="text" placeholder="Example: Make a caption about Filipino adobo for my cooking show." autocomplete="off" />
+            <button class="btn" type="submit" id="generateBtn">Generate</button>
+          </form>
+
+          <div class="suggestions">
+            <button class="chip chip-action" type="button" data-suggest="Make a caption about Filipino adobo for my cooking show.">Adobo cooking</button>
+            <button class="chip chip-action" type="button" data-suggest="Write a caption + hashtag set for a new milktea flavor launch.">Cafe promo</button>
+            <button class="chip chip-action" type="button" data-suggest="Generate 3 ad variations for a small clothing brand — streetwear drop.">Ad variations</button>
+            <button class="chip chip-action" type="button" data-suggest="Design a UI/UX website landing page for a small business — sections + short copy.">UI/UX website</button>
+            <button class="chip chip-action" type="button" data-suggest="Edit my raw video into a 15-second promo reel (cut highlights + captions).">AI video edit</button>
+          </div>
+
           <div class="result-card" id="landingResultCard" hidden>
             <div class="result-top">
               <span class="badge">Result</span>
               <span class="muted" id="landingStatus">Ready</span>
             </div>
-
             <div class="result-body" id="landingResultBody"></div>
-
             <div class="result-bottom">
-              <button class="chip" id="landingMore" type="button">Generate variants</button>
-              <button class="chip" id="landingRefine" type="button">Refine</button>
-              <button class="chip" id="landingExport" type="button">Export PNG</button>
-            </div>
-          </div>
-
-          <form class="prompt-box" id="promptForm">
-            <input id="promptInput" type="text" placeholder="e.g. Make a caption about Philippine adobo for my cooking show" />
-            <button class="btn" type="submit">Generate</button>
-          </form>
-
-          <div class="suggestions">
-            <button class="chip chip-action" type="button" data-suggest="Create a Valentine’s Day promo poster for a café — 2 for 1 drinks, IG post.">Valentine promo</button>
-            <button class="chip chip-action" type="button" data-suggest="Write a caption + hashtag set for a new milktea flavor launch.">Caption + hashtags</button>
-            <button class="chip chip-action" type="button" data-suggest="Generate 3 ad variations for a small clothing brand — streetwear drop.">Ad variations</button>
-          </div>
-        </div>
-
-        <div class="services-grid">
-          <button class="service-card" type="button" data-service="social">
-            <h3>Social Media Content</h3>
-            <p class="muted">Posts, stories, reels, captions, hashtags.</p>
-          </button>
-
-          <button class="service-card" type="button" data-service="branding">
-            <h3>Brand Kit & Consistency</h3>
-            <p class="muted">Colors, fonts, tone, logo lockups.</p>
-          </button>
-
-          <button class="service-card" type="button" data-service="ads">
-            <h3>Ads & Promotions</h3>
-            <p class="muted">Promos, flyers, posters, offer layouts.</p>
-          </button>
-
-          <button class="service-card" type="button" data-service="webui">
-            <h3>Website & UI/UX</h3>
-            <p class="muted">Landing layouts, sections, wireframes + HTML skeleton (demo).</p>
-          </button>
-
-          <button class="service-card" type="button" data-service="video">
-            <h3>AI Video Editing</h3>
-            <p class="muted">Upload raw video + prompt → edit plan + captions (demo).</p>
-          </button>
-        </div>
-
-        <!-- Keep your other sections below if you want; for now ok na -->
-        <section class="section" id="about">
-          <div class="container">
-            <h2>About CreAIte</h2>
-            <p>CreAIte is built for people who need consistent, professional content fast.</p>
-          </div>
-        </section>
-
-        <section class="section" id="how">
-          <div class="container">
-            <h2>How it works</h2>
-            <p>Prompt → Generate → Refine → Export (demo).</p>
-          </div>
-        </section>
-
-        <section class="section" id="value">
-          <div class="container">
-            <h2>Value</h2>
-            <p>Speed, quality, and control.</p>
-          </div>
-        </section>
-
-        <section class="section" id="pricing">
-          <div class="container">
-            <h2>Pricing</h2>
-            <p>Simple tiers (prototype).</p>
-          </div>
-        </section>
-
-        <section class="section" id="contact">
-          <div class="container">
-            <h2>Contact</h2>
-            <form id="contactForm" class="card">
-              <label>Name <input name="name" placeholder="Juan Dela Cruz" required></label><br><br>
-              <label>Email <input type="email" name="email" placeholder="you@email.com" required></label><br><br>
-              <label>Message <textarea name="message" rows="4" placeholder="Tell us what you want to build..." required></textarea></label><br><br>
-              <button class="btn" type="submit">Send message</button>
-              <p class="muted small" id="formNote" aria-live="polite"></p>
-            </form>
-          </div>
-        </section>
-
-        <footer class="footer">
-          <div class="container footer-inner">
-            <p class="muted">© <span id="year"></span> CreAIte — prototype website</p>
-          </div>
-        </footer>
-
-      </div>
-    </section>
-  </main>
-
-  <!-- ✅ JS link -->
-  <script src="./script.js"></script>
-</body>
-</html>
+              <button class="ch
