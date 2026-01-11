@@ -352,8 +352,9 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.45)}
 }
 
 .logo {
-  height: 28px;   /* try 28px–36px */
+  height: 40px;      /* try 38–44 kung gusto mo */
   width: auto;
-  margin-right: 36px;
+  margin-right: 10px;
   object-fit: contain;
 }
+
