@@ -60,7 +60,11 @@ li{margin: 8px 0}
   padding: 14px 0;
   gap: 18px;
 }
-.brand{display:flex; align-items:baseline; gap:10px}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .brand-mark{
   width:34px; height:34px; display:grid; place-items:center;
   border-radius: 12px;
@@ -348,8 +352,8 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.45)}
 }
 
 .logo {
-  height: 36px;
+  height: 32px;   /* try 28px–36px */
   width: auto;
   margin-right: 10px;
+  object-fit: contain;
 }
-
