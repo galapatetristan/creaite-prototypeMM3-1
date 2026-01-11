@@ -47,6 +47,24 @@
         <button class="tool-pill" data-tool="brand">Brand kit</button>
         <button class="tool-pill" data-tool="templates">Templates</button>
       </div>
+<div class="container" style="margin-top:16px;">
+  <div class="result-card" id="landingResultCard" hidden>
+    <div class="result-top">
+      <span class="badge">Result</span>
+      <span class="muted" id="landingStatus">Ready</span>
+    </div>
+
+    <div class="result-body" id="landingResultBody">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="result-bottom">
+      <button class="chip" id="landingMore">Generate variants</button>
+      <button class="chip" id="landingRefine">Refine</button>
+      <button class="chip" id="landingExport">Export PNG</button>
+    </div>
+  </div>
+</div>
 
       <form class="prompt-box" id="promptForm">
         <input
