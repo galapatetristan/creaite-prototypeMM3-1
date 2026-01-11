@@ -253,12 +253,59 @@
   });
 
   // Landing form (index)
-  const landingForm = $("#promptForm");
-  landingForm && landingForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const v = promptInput && promptInput.value;
-    toast(v ? "Generated (demo). Scroll down for workflow & pricing." : "Type a prompt first.");
-  });
+const landingForm = $("#promptForm");
+const landingCard = $("#landingResultCard");
+const landingBody = $("#landingResultBody");
+const landingStatus = $("#landingStatus");
+
+function landingGenerate(promptText) {
+  const prompt = (promptText || "").trim();
+  if (!prompt) return toast("Type a prompt first.");
+
+  if (landingCard) landingCard.hidden = false;
+  if (landingStatus) landingStatus.textContent = "Generating…";
+
+  if (landingBody) {
+    landingBody.innerHTML = `
+      <div class="loading">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <p class="muted" style="margin-top:10px;">Working on: <strong>${prompt.replace(/</g,"&lt;")}</strong></p>
+    `;
+  }
+
+  setTimeout(() => {
+    if (landingStatus) landingStatus.textContent = "Done";
+    if (landingBody) {
+      landingBody.innerHTML = `
+        <h3>Generated output (demo)</h3>
+        <p class="muted"><strong>Prompt:</strong> ${prompt.replace(/</g,"&lt;")}</p>
+        <div class="result-list">
+          <div class="result-item"><strong>Caption (Option 1):</strong> New flavor drop! 🧋 Try it today — limited time only.</div>
+          <div class="result-item"><strong>Caption (Option 2):</strong> Something sweet just landed. Grab your first sip now.</div>
+          <div class="result-item"><strong>Hashtags:</strong> #Milktea #NewFlavor #LocalBusiness #FoodPH #CafePH</div>
+          <div class="result-item"><strong>Design direction:</strong> Minimal layout, product highlight, bold CTA button</div>
+          <div class="result-item"><strong>CTA:</strong> “Order now” / “Visit us today”</div>
+        </div>
+      `;
+    }
+  }, 800);
+}
+
+landingForm && landingForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  landingGenerate(promptInput && promptInput.value);
+});
+
+// action chips (demo)
+const landingMore = $("#landingMore");
+const landingRefine = $("#landingRefine");
+const landingExport = $("#landingExport");
+
+landingMore && landingMore.addEventListener("click", () => toast("Generated variants (demo)."));
+landingRefine && landingRefine.addEventListener("click", () => toast("Refined output (demo)."));
+landingExport && landingExport.addEventListener("click", () => toast("Exported PNG (demo)."));
+
 
   // Service cards click → fill prompt box
   $$(".service-card").forEach((c) => {
