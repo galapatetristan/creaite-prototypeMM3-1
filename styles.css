@@ -353,8 +353,10 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.45)}
 
 /* FORCE logo size */
 .logo{
-  height: 44px !important;
+  height: 72px !important;
   width: auto !important;
+}
+
 }
 
 }
