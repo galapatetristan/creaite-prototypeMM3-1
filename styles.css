@@ -70,7 +70,8 @@ a:hover{ text-decoration: underline; }
   min-width: 220px;
 }
 .logo{
-  height:26px; width:auto;
+  height:40px; /* from 26px -> 40px */
+  width:auto;
   display:block;
   filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
 }
