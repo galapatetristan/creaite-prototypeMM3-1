@@ -1,214 +1,158 @@
-(function () {
-  const $ = (q) => document.querySelector(q);
-  const $$ = (q) => Array.from(document.querySelectorAll(q));
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CreAIte — Create with AI</title>
+  <meta name="description" content="CreAIte is an AI-powered content creation studio for students and SMEs—designs, captions, and videos in minutes." />
+  <link rel="stylesheet" href="./styles.css">
+</head>
 
-  // ---------------------------
-  // DEMO GENERATE (LANDING)
-  // ---------------------------
-  const landingForm = $("#promptForm");
-  const promptInput = $("#promptInput");
+<body>
+  <a class="skip" href="#main">Skip to content</a>
 
-  const landingCard = $("#landingResultCard");
-  const landingBody = $("#landingResultBody");
-  const landingStatus = $("#landingStatus");
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo">
+        <span class="brand-name">CreAIte</span>
+        <span class="brand-tag">Create with AI</span>
+      </a>
 
-  const landingMore = $("#landingMore");
-  const landingRefine = $("#landingRefine");
-  const landingExport = $("#landingExport");
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-    }[c]));
-  }
-
-  function setLandingResult(statusText, html) {
-    if (landingCard) landingCard.hidden = false;
-    if (landingStatus) landingStatus.textContent = statusText || "";
-    if (landingBody) landingBody.innerHTML = html || "";
-  }
-
-function landingGenerate() {
-  const prompt = (promptInput && promptInput.value || "").trim();
-  if (!prompt) return toast("Type a prompt first.");
-
-  const p = prompt.toLowerCase();
-
-  // classify prompt (simple rules)
-  const isFood = /(adobo|cooking|recipe|lut[o|u]|ulam|food|dish|kitchen|chef|sinigang|lechon|pancit|sisig|tinola)/i.test(p);
-  const isCafe = /(milktea|milk tea|latte|coffee|cafe|tea|matcha|espresso|frappe)/i.test(p);
-  const isFashion = /(streetwear|clothing|outfit|fashion|drop|collection|sneakers|apparel)/i.test(p);
-  const isPoster = /(poster|flyer|promo|discount|sale|%|offer|limited|ad|advert|marketing)/i.test(p);
-
-  // helpers
-  const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const pickTags = (arr, n=7) => arr.sort(() => 0.5 - Math.random()).slice(0, n);
-
-  // outputs by category
-  let title = "Generated output (demo)";
-  let caption1 = "";
-  let caption2 = "";
-  let hashtags = [];
-  let direction = "";
-  let cta = "";
-
-  if (isFood && /adobo/i.test(p)) {
-    title = "Generated caption set (Adobo)";
-    caption1 = "Tonight’s comfort food: classic Filipino adobo — rich, savory, and slow-simmered to perfection. 🍲🇵🇭";
-    caption2 = "Adobo on the menu! Tender bites, bold flavors, and that signature sauce you’ll want over rice. 🍚✨";
-    hashtags = ["#Adobo", "#FilipinoFood", "#PinoyCooking", "#HomeCooking", "#CookingShow", "#Ulam", "#FoodiePH", "#Sarap", "#Recipe"];
-    direction = "Warm, cozy food shot • close-up sauce gloss • steam + rice pairing • simple text overlay";
-    cta = "“Watch the full recipe” / “Try this at home”";
-  } else if (isFood) {
-    title = "Generated caption set (Food)";
-    caption1 = "Fresh off the pan — simple ingredients, big flavor. 🍳✨";
-    caption2 = "Cook with me: easy steps, satisfying results, and lots of good vibes in the kitchen. 🍽️";
-    hashtags = ["#FoodContent", "#CookingShow", "#HomeCooking", "#RecipeIdeas", "#FoodiePH", "#KitchenDiaries", "#Sarap"];
-    direction = "Overhead cooking shots • step-by-step captions • final plating hero shot";
-    cta = "“Watch the steps” / “Save this recipe”";
-  } else if (isCafe || (isPoster && isCafe)) {
-    title = "Generated promo captions (Cafe)";
-    caption1 = "New drink drop! 🧋 Try it today — limited time only.";
-    caption2 = "Something sweet just landed. Grab your first sip now.";
-    hashtags = ["#CafePH", "#Milktea", "#CoffeePH", "#NewMenu", "#LocalBusiness", "#FoodPH", "#SupportLocal"];
-    direction = "Minimal layout • product highlight • bold CTA button • brand color accents";
-    cta = "“Order now” / “Visit us today”";
-  } else if (isFashion) {
-    title = "Generated captions (Streetwear drop)";
-    caption1 = "New drop is live. Clean fits, bold details — don’t sleep on it. 🔥";
-    caption2 = "Limited pieces. First come, first served. Tap in before it’s gone. 🧢";
-    hashtags = ["#Streetwear", "#NewDrop", "#LocalBrand", "#OOTD", "#FashionPH", "#StyleUpdate", "#Hype"];
-    direction = "High-contrast layout • model/product focus • size/price tags • drop date highlight";
-    cta = "“Shop the drop” / “Check the collection”";
-  } else if (isPoster) {
-    title = "Generated promo copy (General)";
-    caption1 = "Big deal, limited time — grab it while it lasts. ⚡";
-    caption2 = "Don’t miss out: offer ends soon. Save more today.";
-    hashtags = ["#Promo", "#Sale", "#LimitedOffer", "#Marketing", "#LocalBusiness", "#Deals", "#ShopNow"];
-    direction = "Headline-first layout • clear discount block • one strong CTA";
-    cta = "“Claim offer” / “Shop now”";
-  } else {
-    title = "Generated output (General)";
-    caption1 = "Here’s a clean first draft you can tweak for your brand tone.";
-    caption2 = "Want it more formal, fun, or Gen Z? I can adjust the voice.";
-    hashtags = ["#ContentCreation", "#Marketing", "#Branding", "#Copywriting", "#SocialMedia"];
-    direction = "Clean structure • short lines • clear CTA • consistent voice";
-    cta = "“Generate more” / “Refine”";
-  }
-
-  // show loading first
-  setLandingResult("Generating…", `
-    <div class="loading">
-      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <nav class="nav" id="nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#how">How it works</a>
+        <a href="#value">Value</a>
+        <a href="#pricing">Pricing</a>
+        <a href="./features.html">Features</a>
+        <a href="#contact" class="btn btn-small">Contact</a>
+      </nav>
     </div>
-    <p class="muted" style="margin-top:10px;">Working on: <strong>${escapeHtml(prompt)}</strong></p>
-  `);
+  </header>
 
-  setTimeout(() => {
-    // randomize hashtags a bit but keep relevant
-    const tagLine = pickTags(hashtags, Math.min(7, hashtags.length)).join(" ");
+  <main id="main">
+    <section class="hero hero-chatgpt" id="hero">
+      <div class="container hero-center">
+        <p class="eyebrow">CreAIte — Create with AI</p>
+        <h1 class="hero-title">What do you want to create today?</h1>
+        <p class="lead">
+          Generate marketing designs, captions, and short video concepts in minutes — then refine with your brand kit.
+        </p>
 
-    setLandingResult("Done", `
-      <h3>${escapeHtml(title)}</h3>
-      <p class="muted"><strong>Prompt:</strong> ${escapeHtml(prompt)}</p>
-      <div class="result-list">
-        <div class="result-item"><strong>Caption (Option 1):</strong> ${escapeHtml(caption1)}</div>
-        <div class="result-item"><strong>Caption (Option 2):</strong> ${escapeHtml(caption2)}</div>
-        <div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(tagLine)}</div>
-        <div class="result-item"><strong>Design direction:</strong> ${escapeHtml(direction)}</div>
-        <div class="result-item"><strong>CTA:</strong> ${escapeHtml(cta)}</div>
+        <div class="prompt-shell">
+          <div class="prompt-row">
+            <button class="tool-pill is-active" data-tool="prompt" type="button">Prompt</button>
+            <button class="tool-pill" data-tool="brand" type="button">Brand kit</button>
+            <button class="tool-pill" data-tool="templates" type="button">Templates</button>
+          </div>
+
+          <div class="result-card" id="landingResultCard" hidden>
+            <div class="result-top">
+              <span class="badge">Result</span>
+              <span class="muted" id="landingStatus">Ready</span>
+            </div>
+
+            <div class="result-body" id="landingResultBody"></div>
+
+            <div class="result-bottom">
+              <button class="chip" id="landingMore" type="button">Generate variants</button>
+              <button class="chip" id="landingRefine" type="button">Refine</button>
+              <button class="chip" id="landingExport" type="button">Export PNG</button>
+            </div>
+          </div>
+
+          <form class="prompt-box" id="promptForm">
+            <input id="promptInput" type="text" placeholder="e.g. Make a caption about Philippine adobo for my cooking show" />
+            <button class="btn" type="submit">Generate</button>
+          </form>
+
+          <div class="suggestions">
+            <button class="chip chip-action" type="button" data-suggest="Create a Valentine’s Day promo poster for a café — 2 for 1 drinks, IG post.">Valentine promo</button>
+            <button class="chip chip-action" type="button" data-suggest="Write a caption + hashtag set for a new milktea flavor launch.">Caption + hashtags</button>
+            <button class="chip chip-action" type="button" data-suggest="Generate 3 ad variations for a small clothing brand — streetwear drop.">Ad variations</button>
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <button class="service-card" type="button" data-service="social">
+            <h3>Social Media Content</h3>
+            <p class="muted">Posts, stories, reels, captions, hashtags.</p>
+          </button>
+
+          <button class="service-card" type="button" data-service="branding">
+            <h3>Brand Kit & Consistency</h3>
+            <p class="muted">Colors, fonts, tone, logo lockups.</p>
+          </button>
+
+          <button class="service-card" type="button" data-service="ads">
+            <h3>Ads & Promotions</h3>
+            <p class="muted">Promos, flyers, posters, offer layouts.</p>
+          </button>
+
+          <button class="service-card" type="button" data-service="webui">
+            <h3>Website & UI/UX</h3>
+            <p class="muted">Landing layouts, sections, wireframes + HTML skeleton (demo).</p>
+          </button>
+
+          <button class="service-card" type="button" data-service="video">
+            <h3>AI Video Editing</h3>
+            <p class="muted">Upload raw video + prompt → edit plan + captions (demo).</p>
+          </button>
+        </div>
+
+        <!-- Keep your other sections below if you want; for now ok na -->
+        <section class="section" id="about">
+          <div class="container">
+            <h2>About CreAIte</h2>
+            <p>CreAIte is built for people who need consistent, professional content fast.</p>
+          </div>
+        </section>
+
+        <section class="section" id="how">
+          <div class="container">
+            <h2>How it works</h2>
+            <p>Prompt → Generate → Refine → Export (demo).</p>
+          </div>
+        </section>
+
+        <section class="section" id="value">
+          <div class="container">
+            <h2>Value</h2>
+            <p>Speed, quality, and control.</p>
+          </div>
+        </section>
+
+        <section class="section" id="pricing">
+          <div class="container">
+            <h2>Pricing</h2>
+            <p>Simple tiers (prototype).</p>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="container">
+            <h2>Contact</h2>
+            <form id="contactForm" class="card">
+              <label>Name <input name="name" placeholder="Juan Dela Cruz" required></label><br><br>
+              <label>Email <input type="email" name="email" placeholder="you@email.com" required></label><br><br>
+              <label>Message <textarea name="message" rows="4" placeholder="Tell us what you want to build..." required></textarea></label><br><br>
+              <button class="btn" type="submit">Send message</button>
+              <p class="muted small" id="formNote" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="container footer-inner">
+            <p class="muted">© <span id="year"></span> CreAIte — prototype website</p>
+          </div>
+        </footer>
+
       </div>
-    `);
-  }, 750);
-}
+    </section>
+  </main>
 
-  // Submit + Click fallback (bulletproof)
-  landingForm && landingForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    landingGenerate();
-  });
-
-  const generateBtn = $("#generateBtn");
-  generateBtn && generateBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    landingGenerate();
-  });
-
-  // suggestion chips fill prompt
-  $$(".chip-action").forEach((c) => {
-    c.addEventListener("click", () => {
-      const text = c.dataset.suggest || "";
-      if (promptInput) promptInput.value = text;
-      toast("Prompt filled. Click Generate.");
-    });
-  });
-
-  // service cards fill prompt
-  $$(".service-card").forEach((c) => {
-    c.addEventListener("click", () => {
-      const s = c.dataset.service;
-      const map = {
-        social: "Write 3 caption options + hashtags for a café promo this weekend.",
-        branding: "Create a brand kit: colors, typography, and tone for a minimal skincare brand.",
-        ads: "Generate 3 ad poster variations for a 20% off weekend sale.",
-        web: "Design a landing page layout for a small business — sections + short copy."
-      };
-      if (promptInput) promptInput.value = map[s] || "";
-      toast("Service selected. Click Generate.");
-    });
-  });
-
-  // result action chips
-  landingMore && landingMore.addEventListener("click", () => toast("Generated variants (demo)."));
-  landingRefine && landingRefine.addEventListener("click", () => toast("Refined output (demo)."));
-  landingExport && landingExport.addEventListener("click", () => toast("Exported PNG (demo)."));
-
-  // ---------------------------
-  // Tool pills (simple highlight only)
-  // ---------------------------
-  $$(".tool-pill").forEach((p) => {
-    p.addEventListener("click", () => {
-      $$(".tool-pill").forEach((x) => x.classList.remove("is-active"));
-      p.classList.add("is-active");
-      toast(`${p.textContent} mode (demo)`);
-    });
-  });
-
-  // ---------------------------
-  // Contact form fake submit
-  // ---------------------------
-  const contactForm = $("#contactForm");
-  const formNote = $("#formNote");
-  contactForm && contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (formNote) formNote.textContent = "Sent (demo). We’ll get back to you soon.";
-    toast("Message sent (demo).");
-  });
-
-  // footer year
-  const year = $("#year");
-  if (year) year.textContent = String(new Date().getFullYear());
-
-  // ---------------------------
-  // Toast
-  // ---------------------------
-  function toast(msg) {
-    let t = $("#toast");
-    if (!t) {
-      t = document.createElement("div");
-      t.id = "toast";
-      t.className = "toast";
-      document.body.appendChild(t);
-    }
-    t.textContent = msg;
-    t.classList.add("show");
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => t.classList.remove("show"), 1700);
-  }
-})();
-
-function setLandingResult(statusText, html) {
-  if (landingCard) landingCard.hidden = false;
-  if (landingStatus) landingStatus.textContent = statusText || "";
-  if (landingBody) landingBody.innerHTML = html || "";
-}
+  <!-- ✅ JS link -->
+  <script src="./script.js"></script>
+</body>
+</html>
