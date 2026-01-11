@@ -206,3 +206,10 @@ function landingGenerate() {
     window.__toastTimer = setTimeout(() => t.classList.remove("show"), 1700);
   }
 })();
+
+function setLandingResult(statusText, html) {
+  if (landingCard) landingCard.hidden = false;
+  if (landingStatus) landingStatus.textContent = statusText || "";
+  if (landingBody) landingBody.innerHTML = html || "";
+}
+
