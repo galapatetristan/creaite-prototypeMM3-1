@@ -4,101 +4,153 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CreAIte — Features</title>
-  <meta name="description" content="CreAIte feature demos: prompt generation, website UI/UX generator, and AI video editing flow." />
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="description" content="Explore CreAIte features: prompt generation, brand kit, templates, website/UI output, and video editing (demo)." />
+  <link rel="stylesheet" href="./styles.css?v=1" />
 </head>
 
 <body>
-  <header class="site-header">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="brand" href="./index.html" aria-label="Back to home">
+      <a class="brand" href="./index.html#top" aria-label="CreAIte home">
         <img src="./creaite-logo.png" alt="CreAIte logo" class="logo" />
         <span class="brand-name">CreAIte</span>
         <span class="brand-tag">Create with AI</span>
       </a>
 
-      <nav class="nav nav-inline" aria-label="Primary">
-        <a href="./index.html#hero">Home</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html#about">About</a>
+        <a href="./index.html#how">How it works</a>
         <a href="./index.html#pricing">Pricing</a>
         <a href="./index.html#contact" class="btn btn-small">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main class="section">
-    <div class="container">
-      <div class="section-head">
-        <h1>Features</h1>
-        <p class="muted">Interactive demo modules for presentation.</p>
-      </div>
-
-      <div class="grid-2">
-        <!-- Website / UIUX Generator -->
-        <section class="card">
-          <h2 class="mini-title">Website / UI-UX Generator</h2>
-          <p class="muted">Type a business type, then generate a clean landing structure + copy.</p>
-
-          <form class="form" id="uiuxForm">
-            <label>Business / Brand
-              <input id="uiuxInput" placeholder="Example: milk tea shop, skincare brand, gym, restaurant" />
-            </label>
-            <button class="btn" type="submit">Generate UI/UX</button>
-          </form>
-
-          <div class="result-card" id="uiuxResultCard" hidden>
-            <div class="result-top">
-              <span class="badge">UI/UX Result</span>
-              <span class="muted" id="uiuxStatus">Ready</span>
-            </div>
-            <div class="result-body" id="uiuxBody"></div>
-          </div>
-        </section>
-
-        <!-- AI Video Edit -->
-        <section class="card">
-          <h2 class="mini-title">AI Video Editing</h2>
-          <p class="muted">Upload a raw video (demo) and generate an edit plan: cuts + captions + hook.</p>
-
-          <form class="form" id="videoForm">
-            <label>Upload raw video
-              <input id="videoFile" type="file" accept="video/*" />
-            </label>
-            <label>Goal / Prompt
-              <input id="videoPrompt" placeholder="Example: 15s promo reel for our new menu" />
-            </label>
-            <button class="btn" type="submit">Generate Edit Plan</button>
-          </form>
-
-          <div class="result-card" id="videoResultCard" hidden>
-            <div class="result-top">
-              <span class="badge">Video Result</span>
-              <span class="muted" id="videoStatus">Ready</span>
-            </div>
-            <div class="result-body" id="videoBody"></div>
-          </div>
-        </section>
-      </div>
-
-      <div class="card wide" style="margin-top:16px;">
-        <h2 class="mini-title">Prompt Generator (Demo)</h2>
-        <p class="muted">This matches the same generator behavior as the home page.</p>
-
-        <form class="prompt-box" id="demoPromptForm">
-          <input id="demoPromptInput" type="text" placeholder="Try: Make a caption about adobo for my cooking show." />
-          <button class="btn" type="submit">Generate</button>
-        </form>
-
-        <div class="result-card" id="demoResultCard" hidden>
-          <div class="result-top">
-            <span class="badge">Result</span>
-            <span class="muted" id="demoStatus">Ready</span>
-          </div>
-          <div class="result-body" id="demoBody"></div>
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h1 class="hero-title">Features (Interactive Demo)</h1>
+          <p class="lead">Click modes, type a prompt, and generate outputs for your presentation.</p>
         </div>
+
+        <div class="feature-layout">
+          <div class="card feature-left">
+            <div class="prompt-row">
+              <button class="tool-pill is-active" data-tool="prompt" type="button">Prompt</button>
+              <button class="tool-pill" data-tool="brand" type="button">Brand kit</button>
+              <button class="tool-pill" data-tool="templates" type="button">Templates</button>
+              <button class="tool-pill" data-tool="web" type="button">Website</button>
+              <button class="tool-pill" data-tool="video" type="button">Video edit</button>
+            </div>
+
+            <form class="prompt-box" id="demoPromptForm">
+              <input id="demoPromptInput" type="text" placeholder="Try: 'Make captions for adobo cooking show'" required />
+              <button class="btn" type="submit">Generate</button>
+            </form>
+
+            <div class="suggestions">
+              <button class="chip chip-action" type="button"
+                data-suggest="Write a caption + hashtags for Filipino adobo for my cooking show.">Adobo</button>
+              <button class="chip chip-action" type="button"
+                data-suggest="Generate 3 poster promo variations for a 20% weekend sale.">Promo posters</button>
+              <button class="chip chip-action" type="button"
+                data-suggest="Design a landing page for a small café — sections + copy + CTA.">Website</button>
+              <button class="chip chip-action" type="button"
+                data-suggest="Edit my raw vlog video: add captions, cut dead air, and boost colors.">Video edit</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="mini-actions">
+              <button class="btn btn-ghost" id="saveProjectBtn" type="button">Save project</button>
+              <button class="btn btn-ghost" id="resetDemoBtn" type="button">Reset</button>
+              <button class="btn" id="openSignIn3" type="button">Sign in</button>
+            </div>
+
+            <p class="muted tiny" id="authState"></p>
+          </div>
+
+          <div class="card feature-right">
+            <div class="result-top">
+              <span class="badge" id="resultMode">PROMPT</span>
+              <span class="muted" id="resultStatus">Ready</span>
+            </div>
+
+            <div class="result-body" id="resultBody">
+              <h3>Your results will appear here.</h3>
+              <p class="muted">Type a prompt or click a suggestion, then Generate.</p>
+            </div>
+
+            <div class="result-bottom">
+              <button class="chip" type="button" data-action="variant">More variants</button>
+              <button class="chip" type="button" data-action="refine">Refine</button>
+              <button class="chip" type="button" data-action="export">Export PNG</button>
+            </div>
+
+            <div class="divider"></div>
+            <div class="mini-grid" id="variantGrid" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="section-head" style="margin-top:28px;">
+          <h2>What you can demonstrate</h2>
+          <p class="muted">Use these bullets in your presentation.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Prompt → Output</h3>
+            <p>Generate captions, hashtags, and design directions based on keywords (food, ads, web, etc.).</p>
+          </div>
+          <div class="card">
+            <h3>Website/UI drafts</h3>
+            <p>CreAIte can draft sections + copy + layout structure for websites and landing pages.</p>
+          </div>
+          <div class="card">
+            <h3>AI video editing</h3>
+            <p>Upload raw video (demo) then simulate captions, trims, and color polish.</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <a class="btn btn-ghost" href="./index.html">← Back to home</a>
       </div>
-    </div>
+    </section>
   </main>
 
-  <script src="./script.js"></script>
+  <div class="backdrop" id="authBackdrop" hidden></div>
+  <div class="modal" id="authModal" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="authTitle">Sign in</h3>
+        <button class="icon-btn" id="authClose" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <p class="muted small">Demo sign-in (for presentation only).</p>
+
+      <label class="field">
+        <span>Email (optional)</span>
+        <input id="authEmail" type="email" placeholder="demo@creaite.com" />
+      </label>
+
+      <div class="auth-grid">
+        <button class="auth-btn" type="button" data-provider="Google">Continue with Google</button>
+        <button class="auth-btn" type="button" data-provider="Outlook">Continue with Outlook</button>
+        <button class="auth-btn" type="button" data-provider="Apple ID">Continue with Apple ID</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="authContinue" type="button">Continue with Email</button>
+        <button class="btn" id="authLogout" type="button">Sign out</button>
+      </div>
+
+      <p class="muted tiny" id="authStateInline"></p>
+    </div>
+  </div>
+
+  <script src="./script.js?v=1"></script>
 </body>
 </html>
