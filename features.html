@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CreAIte — Features</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">
+        <img src="./creaite-logo.png" alt="CreAIte logo" class="logo" />
+        <span class="brand-name">CreAIte</span>
+        <span class="brand-tag">Create with AI</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="./index.html#top">Home</a>
+        <a href="./features.html" aria-current="page">Features</a>
+        <button class="btn btn-small" id="openSignIn2">Sign in</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero hero-chatgpt">
+      <div class="container hero-center">
+        <p class="eyebrow">Interactive demo</p>
+        <h1>Click through the product flow.</h1>
+        <p class="lead">Perfect for presentations: prompt → variations → refine → export.</p>
+
+        <div class="demo-panel">
+          <div class="demo-left">
+            <div class="demo-tools">
+              <button class="tool-pill is-active" data-tool="prompt">Prompt</button>
+              <button class="tool-pill" data-tool="brand">Brand kit</button>
+              <button class="tool-pill" data-tool="templates">Templates</button>
+              <button class="tool-pill" data-tool="export">Export</button>
+            </div>
+
+            <form class="prompt-box" id="demoPromptForm">
+              <input id="demoPromptInput" type="text" placeholder="Type a prompt…" />
+              <button class="btn" type="submit">Generate</button>
+            </form>
+
+            <div class="suggestions">
+              <button class="chip chip-action" data-suggest="Create an IG story promo poster for a gym membership — New Year discount.">Gym promo</button>
+              <button class="chip chip-action" data-suggest="Create a product launch post for a skincare serum — minimal, clean.">Skincare launch</button>
+              <button class="chip chip-action" data-suggest="Write 3 caption options for a coffee shop — cozy vibe.">Coffee captions</button>
+            </div>
+
+            <div class="demo-actions">
+              <button class="btn btn-ghost" id="saveProjectBtn">Save project</button>
+              <button class="btn btn-ghost" id="resetDemoBtn">Reset</button>
+            </div>
+          </div>
+
+          <div class="demo-right">
+            <div class="result-card">
+              <div class="result-top">
+                <span class="badge" id="resultMode">Prompt</span>
+                <span class="muted" id="resultStatus">Ready</span>
+              </div>
+
+              <div class="result-body" id="resultBody">
+                <h3>Your results will appear here.</h3>
+                <p class="muted">Type a prompt or click a suggestion, then Generate.</p>
+              </div>
+
+              <div class="result-bottom">
+                <button class="chip" data-action="variant">Generate variants</button>
+                <button class="chip" data-action="refine">Refine</button>
+                <button class="chip" data-action="export">Export PNG</button>
+              </div>
+            </div>
+
+            <div class="mini-grid" id="variantGrid" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a class="btn btn-ghost" href="./index.html">← Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sign-in modal (shared) -->
+  <div class="modal-backdrop" id="authBackdrop" hidden></div>
+  <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+    <div class="modal-inner">
+      <h2 id="authTitle">Sign in to CreAIte</h2>
+      <p class="muted">Prototype only — this simulates login for your presentation.</p>
+
+      <div class="auth-buttons">
+        <button class="auth-btn" data-provider="Google">Continue with Google</button>
+        <button class="auth-btn" data-provider="Microsoft">Continue with Outlook / Microsoft</button>
+        <button class="auth-btn" data-provider="Apple">Continue with Apple</button>
+        <button class="auth-btn" data-provider="Email">Continue with Email</button>
+      </div>
+
+      <div class="auth-form">
+        <label class="muted" for="authEmail">Email (demo)</label>
+        <input id="authEmail" type="email" placeholder="you@example.com" />
+        <button class="btn" id="authContinue">Continue</button>
+      </div>
+
+      <div class="auth-footer">
+        <button class="btn btn-ghost" id="authClose">Close</button>
+        <span class="muted" id="authState"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
