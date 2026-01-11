@@ -346,3 +346,10 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.45)}
   .nav.open{display:flex}
   .menu-btn{display:inline-flex}
 }
+
+.logo {
+  height: 36px;
+  width: auto;
+  margin-right: 10px;
+}
+
