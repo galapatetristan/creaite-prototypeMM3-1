@@ -33,64 +33,64 @@
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">AI-Powered Content Creation Studio</p>
-          <h1>Make marketing content in minutes — not hours.</h1>
-          <p class="lead">
-            CreAIte helps students and small-to-medium enterprises generate professional-grade designs,
-            captions, and short videos with guided prompts, brand-kit consistency, and an editor you control.
-          </p>
-          <div class="hero-cta">
-            <a class="btn" href="#pricing">See pricing</a>
-            <a class="btn btn-ghost" href="#how">View workflow</a>
-          </div>
-          <div class="hero-metrics" role="list" aria-label="Product highlights">
-            <div class="metric" role="listitem"><span class="metric-k">50</span><span class="metric-v">prompts / month (Free Tier, Year 1)</span></div>
-            <div class="metric" role="listitem"><span class="metric-k">4K</span><span class="metric-v">exports on premium plans</span></div>
-            <div class="metric" role="listitem"><span class="metric-k">All-in-one</span><span class="metric-v">design, copy, video + analytics</span></div>
-          </div>
-        </div>
+   <section class="hero hero-chatgpt" id="top">
+  <div class="container hero-center">
+    <p class="eyebrow">CreAIte — Create with AI</p>
+    <h1 class="hero-title">What do you want to create today?</h1>
+    <p class="lead">
+      Generate marketing designs, captions, and short video concepts in minutes — then refine with your brand kit.
+    </p>
 
-        <div class="hero-card" aria-hidden="true">
-          <div class="mock">
-            <div class="mock-top">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <div class="mock-body">
-              <div class="mock-row">
-                <div class="pill">Prompt</div>
-                <div class="pill">Brand kit</div>
-                <div class="pill">Templates</div>
-              </div>
-              <div class="mock-title">“Create a fall-themed promo poster for a pumpkin latte.”</div>
-              <div class="mock-cards">
-                <div class="mini-card">
-                  <div class="mini-top"></div>
-                  <div class="mini-line"></div><div class="mini-line short"></div>
-                </div>
-                <div class="mini-card">
-                  <div class="mini-top alt"></div>
-                  <div class="mini-line"></div><div class="mini-line short"></div>
-                </div>
-                <div class="mini-card">
-                  <div class="mini-top"></div>
-                  <div class="mini-line"></div><div class="mini-line short"></div>
-                </div>
-              </div>
-              <div class="mock-footer">
-                <div class="pill strong">Export PNG</div>
-                <div class="pill">Schedule posts</div>
-                <div class="pill">Analytics</div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="prompt-shell">
+      <div class="prompt-row">
+        <button class="tool-pill is-active" data-tool="prompt">Prompt</button>
+        <button class="tool-pill" data-tool="brand">Brand kit</button>
+        <button class="tool-pill" data-tool="templates">Templates</button>
       </div>
-      <div class="hero-gradient" aria-hidden="true"></div>
-    </section>
 
+      <form class="prompt-box" id="promptForm">
+        <input
+          id="promptInput"
+          type="text"
+          placeholder="Example: Create a promo poster for a pumpkin latte — warm fall colors, 20% off, IG story."
+          autocomplete="off"
+        />
+        <button class="btn" type="submit">Generate</button>
+      </form>
+
+      <div class="suggestions">
+        <button class="chip chip-action" data-suggest="Create a Valentine’s Day promo poster for a café — 2 for 1 drinks, IG post.">Valentine promo</button>
+        <button class="chip chip-action" data-suggest="Write a caption + hashtag set for a new milktea flavor launch.">Caption + hashtags</button>
+        <button class="chip chip-action" data-suggest="Generate 3 ad variations for a small clothing brand — streetwear drop.">Ad variations</button>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <button class="service-card" data-service="social">
+        <h3>Social Media Content</h3>
+        <p class="muted">Posts, stories, reels, captions, hashtags.</p>
+      </button>
+      <button class="service-card" data-service="branding">
+        <h3>Brand Kit & Consistency</h3>
+        <p class="muted">Colors, fonts, tone, logo lockups.</p>
+      </button>
+      <button class="service-card" data-service="ads">
+        <h3>Ads & Promotions</h3>
+        <p class="muted">Promos, flyers, posters, offer layouts.</p>
+      </button>
+      <button class="service-card" data-service="web">
+        <h3>Website & UI/UX</h3>
+        <p class="muted">Landing mockups, sections, wireframes.</p>
+      </button>
+    </div>
+
+    <div class="hero-cta">
+      <button class="btn" id="openSignIn">Sign in to save projects</button>
+      <a class="btn btn-ghost" href="#how">View workflow</a>
+      <a class="btn btn-ghost" href="./features.html">See features</a>
+    </div>
+  </div>
+</section>
     <section class="section" id="about">
       <div class="container">
         <div class="section-head">
