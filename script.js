@@ -297,6 +297,15 @@ landingForm && landingForm.addEventListener("submit", (e) => {
   landingGenerate(promptInput && promptInput.value);
 });
 
+// Fallback: handle Generate button click even if form submit doesn't fire
+const landingGenerateBtn = document.querySelector("#promptForm button, #promptForm .btn");
+landingGenerateBtn && landingGenerateBtn.addEventListener("click", (e) => {
+  // if button isn't submit, prevent default just in case
+  e.preventDefault();
+  landingGenerate(promptInput && promptInput.value);
+});
+
+
 // action chips (demo)
 const landingMore = $("#landingMore");
 const landingRefine = $("#landingRefine");
