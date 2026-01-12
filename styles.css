@@ -647,43 +647,51 @@ a:hover{ text-decoration: underline; }
   .nav{ gap:12px; }
 }
 
-/* Modal layers */
-#authBackdrop{
+/* Backdrop should be below modal */
+#authBackdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.55);
-  z-index: 9998;
+  background: rgba(0, 0, 0, 0.55); /* dark overlay */
+  z-index: 2000; /* lower than modal */
 }
 
-#authModal{
+/* Modal should be on top of the backdrop */
+#authModal {
   position: fixed;
+  z-index: 2100;
   inset: 0;
-  display: grid;
-  place-items: center;
-  z-index: 9999;
-  pointer-events: none; /* prevents accidental blocking */
+  margin: auto;
+  width: min(560px, 92vw);
+  height: fit-content;
+  max-height: 85vh;
+  overflow: auto;
+  pointer-events: auto;
+  background-color: white;
+  border-radius: 8px;
 }
 
-#authModal > *{
-  pointer-events: auto; /* re-enable inside the modal card */
-}
-
-/* Close button */
-.modal-close{
+/* Close button on top-right of modal */
+#authClose {
   position: absolute;
   top: 14px;
   right: 14px;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(20,22,30,.55);
-  color: #fff;
-  font-size: 22px;
-  line-height: 1;
-  display: grid;
-  place-items: center;
+  z-index: 9999;
+  pointer-events: auto;
   cursor: pointer;
-  z-index: 10000;
+  font-size: 24px;
+  border: none;
+  background: transparent;
 }
-.modal-close:hover{ transform: translateY(-1px); }
+
+/* Modal content styling */
+.modal-card {
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
