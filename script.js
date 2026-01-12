@@ -70,7 +70,7 @@
     }
   };
 
-  function openAuth() {
+  function {
     if (!authBackdrop || !authModal) return;
     authBackdrop.hidden = false;
     authModal.hidden = false;
