@@ -62,11 +62,12 @@
     }
   };
 
-  const authBackdrop = $("#authBackdrop");
-  const authModal = $("#authModal");
-  const authEmail = $("#authEmail");
-  const authClose = $("#authClose");
-  const authContinue = $("#authContinue");
+ const authBackdrop = document.querySelector("#authBackdrop");
+const authModal = document.querySelector("#authModal");
+const authState = document.querySelector("#authState");
+const authEmail = document.querySelector("#authEmail");
+const authContinue = document.querySelector("#authContinue");
+const authClose = document.querySelector("#authClose");
   const authLogout = $("#authLogout");
   const authState = $("#authState");
   const authStateInline = $("#authStateInline");
@@ -96,8 +97,13 @@
   }
 
   // Hook sign-in open buttons
-  ["#openSignIn", "#openSignIn2", "#openSignIn3"].map((id) => $(id)).filter(Boolean)
-    .forEach((b) => b.addEventListener("click", openAuth));
+  const openBtns = ["#openSignIn", "#openSignIn2"]
+  .map(id => document.querySelector(id))
+  .filter(Boolean);
+
+openBtns.forEach(btn => btn.addEventListener("click", openAuth));
+authClose && authClose.addEventListener("click", closeAuth);
+authBackdrop && authBackdrop.addEventListener("click", closeAuth);
 
   authClose && authClose.addEventListener("click", closeAuth);
   authBackdrop && authBackdrop.addEventListener("click", closeAuth);
