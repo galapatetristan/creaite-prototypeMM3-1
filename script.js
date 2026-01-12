@@ -83,6 +83,30 @@ const authClose = document.querySelector("#authClose");
     authBackdrop.hidden = true;
     authModal.hidden = true;
   }
+const authBackdrop = document.querySelector("#authBackdrop");
+const authModal = document.querySelector("#authModal");
+const authClose = document.querySelector("#authClose");
+
+function openAuth(){
+  if(!authBackdrop || !authModal) return;
+  authBackdrop.hidden = false;
+  authModal.hidden = false;
+}
+
+function closeAuth(){
+  if(!authBackdrop || !authModal) return;
+  authBackdrop.hidden = true;
+  authModal.hidden = true;
+}
+
+authClose && authClose.addEventListener("click", closeAuth);
+authBackdrop && authBackdrop.addEventListener("click", closeAuth);
+
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && authModal && authModal.hidden === false){
+    closeAuth();
+  }
+});
 
   function renderAuthState() {
     const u = auth.user;
