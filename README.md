@@ -1,29 +1,29 @@
 # CreAIte — Website (Static)
 
-A clean, responsive CreAIte website built for presentations and demos.
+A simple, responsive landing website for **CreAIte** (“Create with AI”).  
+Built as a static site for presentations and GitHub Pages deployment.
 
 ## Files
-- `index.html` — Home + interactive “Generate” demo + pricing tabs
-- `features.html` — Feature demo page (interactive)
-- `styles.css` — UI styling
-- `script.js` — Interactions (generate demo, tabs, sign-in simulation, video edit simulation)
+- `index.html` — main landing page + pricing tabs + demo generator + demo auth modal
+- `features.html` — feature overview + admin dashboard (backend concept)
+- `styles.css` — all styling (dark UI)
+- `script.js` — all interactions (generate, pricing tabs, auth modal, video demo)
 
 ## Run locally
 Just open `index.html` in your browser.
 
-## Deploy on GitHub Pages (Free)
-1. Push these files to your GitHub repo root
-2. Go to **Settings → Pages**
-3. Set:
+## Deploy to GitHub Pages (free)
+1. Create a GitHub repository (public is easiest).
+2. Upload these files to the repo root:
+   - `index.html`, `features.html`, `styles.css`, `script.js`, `creaite-logo.png`
+3. Go to **Settings → Pages**
+4. Under **Build and deployment**:
    - Source: `Deploy from a branch`
-   - Branch: `main` / `root`
-4. Save — GitHub will provide your site URL.
+   - Branch: `main` / `(root)`
+5. Save. GitHub will give you a Pages link like:
+   `https://<username>.github.io/<repo>/`
 
-## Tips (if changes don't show)
-- Hard refresh: `Ctrl + Shift + R`
-- Add cache-bust: change `?v=1` to `?v=2` in:
-  - `styles.css?v=2`
-  - `script.js?v=2`
-- Make sure the files are not pasted into each other:
-  - `index.html` must be HTML only
-  - `script.js` must be JS only
+## Notes
+- The “Sign in” is demo-only (no real authentication).
+- Export buttons are demo-only (simulated).
+- Pricing is structured by customer type: Personal, Student, Business, Enterprise.
