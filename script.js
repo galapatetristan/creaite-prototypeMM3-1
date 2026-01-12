@@ -7,7 +7,11 @@
   // ---------------------------
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
     }[c]));
   }
 
@@ -44,7 +48,7 @@
   }
 
   // ---------------------------
-  // Auth (DEMO) — FIXED
+  // Auth (DEMO) — HARD QUICK FIX (no auto-open)
   // ---------------------------
   const authBackdrop = $("#authBackdrop");
   const authModal = $("#authModal");
@@ -70,16 +74,35 @@
     }
   };
 
-  // Open auth modal function
+  function forceAuthLayerFix() {
+    // This overrides bad CSS that blocks clicks on modal buttons
+    if (authBackdrop) {
+      authBackdrop.style.zIndex = "9998";
+      authBackdrop.style.pointerEvents = "auto";
+    }
+    if (authModal) {
+      authModal.style.zIndex = "9999";
+      authModal.style.pointerEvents = "auto";
+    }
+    const card = authModal ? authModal.querySelector(".modal-card") : null;
+    if (card) {
+      card.style.pointerEvents = "auto";
+    }
+    if (authClose) {
+      authClose.style.pointerEvents = "auto";
+      authClose.style.zIndex = "10000";
+    }
+  }
+
   function openAuth() {
     if (!authBackdrop || !authModal) return;
     authBackdrop.hidden = false;
     authModal.hidden = false;
     document.body.style.overflow = "hidden";
+    forceAuthLayerFix();
     setTimeout(() => authEmail && authEmail.focus(), 0);
   }
 
-  // Close auth modal
   function closeAuth() {
     if (!authBackdrop || !authModal) return;
     authBackdrop.hidden = true;
@@ -87,7 +110,6 @@
     document.body.style.overflow = "";
   }
 
-  // Render auth state
   function renderAuthState() {
     const u = auth.user;
     const signed = u ? `Signed in as ${u.email || "demo-user"} (${u.provider})` : "";
@@ -101,11 +123,16 @@
     });
   }
 
-  // Open buttons for Sign In
-  ["#openSignIn", "#openSignIn2"].map((id) => $(id)).filter(Boolean)
+  // IMPORTANT: do NOT auto-open on load
+  // (Make sure you do NOT call openAuth() anywhere)
+
+  // Open buttons (manual lang)
+  ["#openSignIn", "#openSignIn2"]
+    .map((id) => $(id))
+    .filter(Boolean)
     .forEach((btn) => btn.addEventListener("click", openAuth));
 
-  // Close by X (IMPORTANT: stopPropagation so it won't get eaten by backdrop click)
+  // Close by X (still keep, but we won't rely on it only)
   if (authClose) {
     authClose.addEventListener("click", (e) => {
       e.preventDefault();
@@ -114,7 +141,7 @@
     });
   }
 
-  // Close by clicking backdrop
+  // Close by clicking backdrop (main close method)
   if (authBackdrop) {
     authBackdrop.addEventListener("click", (e) => {
       e.preventDefault();
@@ -137,7 +164,7 @@
         auth.user = { provider, email, ts: Date.now() };
         toast(`Signed in (${provider})`);
         closeAuth();
-      }, 350);
+      }, 250);
     });
   });
 
@@ -160,13 +187,15 @@
   renderAuthState();
 
   // ---------------------------
-  // Tool pills (Prompt/Brand/Templates/Web/Video)
+  // Tool pills
   // ---------------------------
   let activeTool = "prompt";
 
   function setActiveTool(tool) {
     activeTool = tool || "prompt";
-    $$(".tool-pill").forEach((p) => p.classList.toggle("is-active", p.dataset.tool === activeTool));
+    $$(".tool-pill").forEach((p) =>
+      p.classList.toggle("is-active", p.dataset.tool === activeTool)
+    );
 
     const videoRow = $("#videoUploadRow");
     if (videoRow) videoRow.hidden = (activeTool !== "video");
@@ -178,7 +207,7 @@
   $$(".tool-pill").forEach((p) => p.addEventListener("click", () => setActiveTool(p.dataset.tool)));
 
   // ---------------------------
-  // Service cards (active highlight + prompt fill)
+  // Service cards
   // ---------------------------
   const promptInput = $("#promptInput");
 
@@ -203,7 +232,7 @@
     });
   });
 
-  // Suggestion chips fill prompt
+  // Suggestion chips
   $$(".chip-action").forEach((c) => {
     c.addEventListener("click", () => {
       const text = c.dataset.suggest || "";
@@ -239,14 +268,14 @@
   }
 
   function buildOutput(prompt, tool) {
-    const p = (prompt || "").toLowerCase();
-
-    // Example content (you can customize)
+    // keep your old complex logic if you want; this is safe default
+    const tags = ["#CreAIte", "#ContentCreation", "#Design", "#Copywriting", "#Student", "#SME", "#Marketing"];
     return {
       title: "Generated output (demo)",
       blocks: [
-        `<div class="result-item"><strong>Draft:</strong> Here’s a clean first draft you can tweak for your tone.</div>`,
-        `<div class="result-item"><strong>Tip:</strong> Add audience + platform + goal for better results.</div>`
+        `<div class="result-item"><strong>Prompt:</strong> ${escapeHtml(prompt)}</div>`,
+        `<div class="result-item"><strong>Output:</strong> Ready-to-use draft + direction (demo).</div>`,
+        `<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags, 7).join(" "))}</div>`
       ],
       exportLabel: "Export PNG"
     };
@@ -260,7 +289,6 @@
 
     setTimeout(() => {
       const out = buildOutput(prompt, activeTool);
-
       setLandingResult("Done", `
         <h3>${escapeHtml(out.title)}</h3>
         <p class="muted"><strong>Prompt:</strong> ${escapeHtml(prompt)}</p>
@@ -268,7 +296,7 @@
       `);
 
       if (landingExport) landingExport.textContent = out.exportLabel || "Export PNG";
-    }, 600);
+    }, 500);
   }
 
   if (landingForm) {
@@ -325,7 +353,7 @@
   }
 
   // ---------------------------
-  // Pricing tabs
+  // Pricing tabs (default personal)
   // ---------------------------
   const tabs = $$(".tab");
   const panels = $$("[data-panel]");
@@ -336,13 +364,13 @@
       t.classList.toggle("active", isActive);
       t.setAttribute("aria-selected", isActive ? "true" : "false");
     });
-
     panels.forEach((p) => {
       p.classList.toggle("hidden", p.dataset.panel !== name);
     });
   }
 
   tabs.forEach((t) => t.addEventListener("click", () => setTab(t.dataset.tab)));
+  if (tabs.length) setTab("personal");
 
   // Footer year
   const year = $("#year");
