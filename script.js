@@ -548,3 +548,39 @@ authBackdrop && authBackdrop.addEventListener("click", closeAuth);
   });
 
 })();
+
+// Close modal when clicking the backdrop or close button
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#authClose")) {
+    // Close modal when '×' is clicked
+    closeAuth();
+  }
+
+  if (e.target.closest("#authBackdrop")) {
+    // Close modal when backdrop is clicked
+    closeAuth();
+  }
+});
+
+// Function to open the auth modal
+function openAuth() {
+  const authBackdrop = document.querySelector("#authBackdrop");
+  const authModal = document.querySelector("#authModal");
+
+  if (!authModal || !authBackdrop) return;
+
+  authBackdrop.hidden = false; // Show backdrop
+  authModal.hidden = false; // Show modal
+}
+
+// Function to close the auth modal
+function closeAuth() {
+  const authBackdrop = document.querySelector("#authBackdrop");
+  const authModal = document.querySelector("#authModal");
+
+  if (!authModal || !authBackdrop) return;
+
+  authBackdrop.hidden = true; // Hide backdrop
+  authModal.hidden = true; // Hide modal
+}
+
