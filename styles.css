@@ -646,3 +646,44 @@ a:hover{ text-decoration: underline; }
   .brand-tag{ display:none; }
   .nav{ gap:12px; }
 }
+
+/* Modal layers */
+#authBackdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 9998;
+}
+
+#authModal{
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  pointer-events: none; /* prevents accidental blocking */
+}
+
+#authModal > *{
+  pointer-events: auto; /* re-enable inside the modal card */
+}
+
+/* Close button */
+.modal-close{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(20,22,30,.55);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10000;
+}
+.modal-close:hover{ transform: translateY(-1px); }
