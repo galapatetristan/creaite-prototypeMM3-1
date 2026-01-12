@@ -564,12 +564,21 @@
       <button id="authClose" class="modal-close" type="button" aria-label="Close">×</button>
     </div>
 
-    <p class="muted small">
-      Demo sign-in for presentation (no real auth yet).
-    </p>
-    <!-- (rest of the modal content goes here) -->
+    <p class="muted small">Demo sign-in for presentation (no real auth yet).</p>
+
+    <label class="muted small">Email (optional)</label>
+    <input id="authEmail" type="email" placeholder="demo@creaite.com" />
+
+    <button class="auth-btn" data-provider="Google">Continue with Google</button>
+    <button class="auth-btn" data-provider="Outlook">Continue with Outlook</button>
+    <button class="auth-btn" data-provider="Apple ID">Continue with Apple ID</button>
+    <button class="auth-btn" data-provider="Email" id="authContinue">Continue with Email</button>
+
+    <button class="auth-btn" id="authLogout" type="button">Sign out</button>
+    <p class="muted small" id="authState"></p>
   </div>
 </div>
+
 
       <label class="field">
         <span>Email (optional)</span>
