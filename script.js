@@ -61,28 +61,7 @@
       renderAuthState();
     }
   };
-
- const authBackdrop = document.querySelector("#authBackdrop");
-const authModal = document.querySelector("#authModal");
-const authState = document.querySelector("#authState");
-const authEmail = document.querySelector("#authEmail");
-const authContinue = document.querySelector("#authContinue");
-const authClose = document.querySelector("#authClose");
-  const authLogout = $("#authLogout");
-  const authState = $("#authState");
-  const authStateInline = $("#authStateInline");
-
-  function openAuth() {
-    if (!authModal || !authBackdrop) return;
-    authBackdrop.hidden = false;
-    authModal.hidden = false;
-    authEmail && authEmail.focus();
-  }
-  function closeAuth() {
-    if (!authModal || !authBackdrop) return;
-    authBackdrop.hidden = true;
-    authModal.hidden = true;
-  }
+  
 const authBackdrop = document.querySelector("#authBackdrop");
 const authModal = document.querySelector("#authModal");
 const authClose = document.querySelector("#authClose");
