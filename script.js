@@ -70,7 +70,8 @@
     }
   };
 
-  function {
+  // Open auth modal function
+  function openAuth() {
     if (!authBackdrop || !authModal) return;
     authBackdrop.hidden = false;
     authModal.hidden = false;
@@ -78,6 +79,7 @@
     setTimeout(() => authEmail && authEmail.focus(), 0);
   }
 
+  // Close auth modal
   function closeAuth() {
     if (!authBackdrop || !authModal) return;
     authBackdrop.hidden = true;
@@ -85,6 +87,7 @@
     document.body.style.overflow = "";
   }
 
+  // Render auth state
   function renderAuthState() {
     const u = auth.user;
     const signed = u ? `Signed in as ${u.email || "demo-user"} (${u.provider})` : "";
@@ -98,7 +101,7 @@
     });
   }
 
-  // Open buttons
+  // Open buttons for Sign In
   ["#openSignIn", "#openSignIn2"].map((id) => $(id)).filter(Boolean)
     .forEach((btn) => btn.addEventListener("click", openAuth));
 
@@ -238,141 +241,15 @@
   function buildOutput(prompt, tool) {
     const p = (prompt || "").toLowerCase();
 
-    const isFood = /(adobo|cooking|recipe|luto|ulam|food|dish|kitchen|chef|sinigang|lechon|pancit|sisig|tinola)/i.test(p);
-    const isAdobo = /adobo/i.test(p);
-
-    const isCafe = /(milktea|milk tea|latte|coffee|cafe|tea|matcha|espresso|frappe)/i.test(p);
-    const isFashion = /(streetwear|clothing|outfit|fashion|drop|collection|sneakers|apparel)/i.test(p);
-    const isPoster = /(poster|flyer|promo|discount|sale|%|offer|limited|ad\b|advert|marketing)/i.test(p);
-
-    const isWebsite = /(website|landing page|ui\/ux|ui|ux|wireframe|sections|copy|homepage|navbar|3-page)/i.test(p) || tool === "web";
-    const isVideo = /(video|edit|caption|subtitles|trim|reels|tiktok|color grade|cinematic|raw video|upload)/i.test(p) || tool === "video";
-
-    let title = "Generated output (demo)";
-    const blocks = [];
-    let exportLabel = "Export PNG";
-
-    // WEBSITE
-    if (isWebsite && !isVideo) {
-      title = "Website draft (UI/UX + Copy)";
-      exportLabel = "Export PNG (demo)";
-
-      blocks.push(`<div class="result-item"><strong>Hero headline:</strong> Make marketing content in minutes — not hours.</div>`);
-      blocks.push(`<div class="result-item"><strong>Subheadline:</strong> Captions, posters, website sections, and video edits — guided by prompts + templates.</div>`);
-      blocks.push(`<div class="result-item"><strong>Primary CTA:</strong> Start free • <strong>Secondary:</strong> View pricing</div>`);
-
-      blocks.push(`<div class="result-item"><strong>Suggested sections:</strong><br>
-        1) Benefits grid (Speed • Consistency • Control)<br>
-        2) How it works (4 steps)<br>
-        3) Services (Social, Ads, Web/UI, Video)<br>
-        4) Pricing (Personal/Student/Business/Enterprise)<br>
-        5) FAQ + Contact</div>`);
-
-      blocks.push(`<div class="result-item"><strong>UI/UX notes:</strong> Sticky nav • Big prompt box • Card layout • Clear “Generate” button • Mobile-first</div>`);
-      blocks.push(`<div class="result-item"><strong>Suggested prompt:</strong> “${escapeHtml(prompt)}”</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // VIDEO
-    if (isVideo) {
-      title = "Video edit plan (demo)";
-      exportLabel = "Export MP4 (demo)";
-
-      blocks.push(`<div class="result-item"><strong>Edits:</strong> Cut dead air • Auto captions • Hook text in first 2 seconds • Color polish</div>`);
-      blocks.push(`<div class="result-item"><strong>Caption style:</strong> Large, high-contrast • 1–2 lines max • highlight keywords</div>`);
-      blocks.push(`<div class="result-item"><strong>Pacing:</strong> quick jump cuts • beat-synced transitions • remove pauses</div>`);
-      blocks.push(`<div class="result-item"><strong>Export formats:</strong> 9:16 (Reels/TikTok) • 1:1 (IG) • 16:9 (YT)</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> “Watch till the end” / “Follow for part 2”</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // FOOD — ADOB0 FIX
-    if (isFood && isAdobo) {
-      title = "Caption set — Filipino Adobo";
-      const c1 = "Tonight’s comfort food: classic Filipino adobo — rich, savory, and slow-simmered to perfection. 🍲🇵🇭";
-      const c2 = "Adobo on the menu! Tender bites, bold flavors, and that signature sauce you’ll want over rice. 🍚✨";
-      const tags = ["#Adobo", "#FilipinoFood", "#PinoyCooking", "#HomeCooking", "#CookingShow", "#Ulam", "#FoodiePH", "#Sarap", "#Recipe"];
-
-      blocks.push(`<div class="result-item"><strong>Caption (Option 1):</strong> ${escapeHtml(c1)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Caption (Option 2):</strong> ${escapeHtml(c2)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags).join(" "))}</div>`);
-      blocks.push(`<div class="result-item"><strong>Shot direction:</strong> close-up sauce gloss • steam + rice • plating hero shot • simple text overlay</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> Watch the full recipe / Try this at home</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // OTHER FOOD
-    if (isFood) {
-      title = "Caption set — Food";
-      const c1 = "Fresh off the pan — simple ingredients, big flavor. 🍳✨";
-      const c2 = "Cook with me: easy steps, satisfying results, and good vibes in the kitchen. 🍽️";
-      const tags = ["#FoodContent", "#CookingShow", "#HomeCooking", "#RecipeIdeas", "#FoodiePH", "#KitchenDiaries", "#Sarap"];
-
-      blocks.push(`<div class="result-item"><strong>Caption (Option 1):</strong> ${escapeHtml(c1)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Caption (Option 2):</strong> ${escapeHtml(c2)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags).join(" "))}</div>`);
-      blocks.push(`<div class="result-item"><strong>Shot direction:</strong> overhead cooking • step captions • final plating hero shot</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> Save this recipe / Watch the steps</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // CAFE
-    if (isCafe || (isPoster && isCafe)) {
-      title = "Promo captions — Café";
-      const c1 = "New drink drop! 🧋 Try it today — limited time only.";
-      const c2 = "Something sweet just landed. Grab your first sip now.";
-      const tags = ["#CafePH", "#Milktea", "#CoffeePH", "#NewMenu", "#LocalBusiness", "#FoodPH", "#SupportLocal"];
-
-      blocks.push(`<div class="result-item"><strong>Caption (Option 1):</strong> ${escapeHtml(c1)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Caption (Option 2):</strong> ${escapeHtml(c2)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags).join(" "))}</div>`);
-      blocks.push(`<div class="result-item"><strong>Design direction:</strong> minimal layout • product highlight • bold CTA • brand color accents</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> Order now / Visit us today</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // FASHION
-    if (isFashion) {
-      title = "Captions — Streetwear drop";
-      const c1 = "New drop is live. Clean fits, bold details — don’t sleep on it. 🔥";
-      const c2 = "Limited pieces. First come, first served. Tap in before it’s gone. 🧢";
-      const tags = ["#Streetwear", "#NewDrop", "#LocalBrand", "#OOTD", "#FashionPH", "#StyleUpdate", "#Hype"];
-
-      blocks.push(`<div class="result-item"><strong>Caption (Option 1):</strong> ${escapeHtml(c1)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Caption (Option 2):</strong> ${escapeHtml(c2)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags).join(" "))}</div>`);
-      blocks.push(`<div class="result-item"><strong>Design direction:</strong> high contrast • product focus • drop date highlight • one strong CTA</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> Shop the drop / Check the collection</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // POSTER / ADS
-    if (isPoster) {
-      title = "Promo copy — General";
-      const c1 = "Big deal, limited time — grab it while it lasts. ⚡";
-      const c2 = "Don’t miss out: offer ends soon. Save more today.";
-      const tags = ["#Promo", "#Sale", "#LimitedOffer", "#Marketing", "#LocalBusiness", "#Deals", "#ShopNow"];
-
-      blocks.push(`<div class="result-item"><strong>Copy (Option 1):</strong> ${escapeHtml(c1)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Copy (Option 2):</strong> ${escapeHtml(c2)}</div>`);
-      blocks.push(`<div class="result-item"><strong>Hashtags:</strong> ${escapeHtml(pickTags(tags).join(" "))}</div>`);
-      blocks.push(`<div class="result-item"><strong>Layout direction:</strong> headline-first • discount block • social proof line • one CTA</div>`);
-      blocks.push(`<div class="result-item"><strong>CTA:</strong> Claim offer / Shop now</div>`);
-
-      return { title, blocks, exportLabel };
-    }
-
-    // DEFAULT
-    title = "Generated output (General)";
-    blocks.push(`<div class="result-item"><strong>Draft:</strong> Here’s a clean first draft you can tweak for your tone.</div>`);
-    blocks.push(`<div class="result-item"><strong>Tip:</strong> Add audience + platform + goal for better results.</div>`);
-    return { title, blocks, exportLabel };
+    // Example content (you can customize)
+    return {
+      title: "Generated output (demo)",
+      blocks: [
+        `<div class="result-item"><strong>Draft:</strong> Here’s a clean first draft you can tweak for your tone.</div>`,
+        `<div class="result-item"><strong>Tip:</strong> Add audience + platform + goal for better results.</div>`
+      ],
+      exportLabel: "Export PNG"
+    };
   }
 
   function landingGenerate() {
